@@ -3,7 +3,7 @@ name: Rust
 on: [push, pull_request]
 
 jobs:
-  check_n_test:
+  test:
     name: cargo test
     uses: noir-lang/.github/.github/workflows/rust-test.yml@phated/name-jobs
 
