@@ -57,6 +57,7 @@ impl Opcode {
         match self {
             Opcode::LowLevel(op) => {
                 match op {
+                    BlackBoxFunc::Keccak256 => todo!(),
                     // Pointers do not overflow
                     BlackBoxFunc::SHA256
                     | BlackBoxFunc::Blake2s
@@ -85,6 +86,7 @@ impl Opcode {
         match self {
             Opcode::LowLevel(op) => {
                 match op {
+                    BlackBoxFunc::Keccak256 => todo!(),
                     BlackBoxFunc::AES => todo!("ICE: AES is unimplemented"),
                     BlackBoxFunc::SHA256 | BlackBoxFunc::Blake2s => (32, ObjectType::Unsigned(8)),
                     BlackBoxFunc::HashToField128Security => (1, ObjectType::NativeField),

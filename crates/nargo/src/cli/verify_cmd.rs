@@ -6,7 +6,7 @@ use crate::{
     constants::{PROOFS_DIR, PROOF_EXT, TARGET_DIR, VERIFIER_INPUT_FILE},
     errors::CliError,
 };
-use acvm::{FieldElement, ProofSystemCompiler};
+use acvm::ProofSystemCompiler;
 use clap::Args;
 use noirc_abi::errors::AbiError;
 use noirc_abi::input_parser::Format;
@@ -101,15 +101,9 @@ pub(crate) fn verify_proof(
             _ => CliError::from(error),
         })?;
 
-    let public_inputs_vec: Vec<FieldElement> = public_inputs.values().copied().collect();
-
     let backend = crate::backends::ConcreteBackend;
-    let valid_proof = backend.verify_with_vk(
-        proof,
-        public_inputs_vec,
-        compiled_program.circuit,
-        verification_key,
-    );
+    let valid_proof =
+        backend.verify_with_vk(proof, public_inputs, compiled_program.circuit, verification_key);
 
     Ok(valid_proof)
 }
