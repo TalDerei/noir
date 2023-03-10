@@ -1,5 +1,4 @@
 use acvm::acir::native_types::Witness;
-use noirc_abi::MAIN_RETURN_NAME;
 
 use crate::{
     errors::RuntimeErrorKind,
@@ -54,8 +53,7 @@ pub(crate) fn evaluate(
             }
             witnesses.push(witness);
         }
-        evaluator.public_inputs.extend(witnesses.clone());
-        evaluator.param_witnesses.insert(MAIN_RETURN_NAME.to_owned(), witnesses);
+        evaluator.return_values.extend(witnesses);
     }
 
     Ok(None)

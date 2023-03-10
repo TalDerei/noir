@@ -12,7 +12,7 @@ use acvm::{
 };
 use errors::{RuntimeError, RuntimeErrorKind};
 use iter_extended::btree_map;
-use noirc_abi::{Abi, AbiType, AbiVisibility, MAIN_RETURN_NAME};
+use noirc_abi::{Abi, AbiType, AbiVisibility};
 use noirc_frontend::monomorphization::ast::*;
 use ssa::{node, ssa_gen::IrGenerator};
 use std::collections::{BTreeMap, BTreeSet};
@@ -37,10 +37,15 @@ pub struct Evaluator {
     // creating the private/public inputs of the ABI.
     num_witnesses_abi_len: usize,
     param_witnesses: BTreeMap<String, Vec<Witness>>,
-    // This is the list of witness indices which are linked to public inputs.
+
     // Witnesses below `num_witnesses_abi_len` and not included in this set
     // correspond to private inputs and must not be made public.
-    public_inputs: BTreeSet<Witness>,
+    /// The set of public inputs provided by the prover.
+    public_parameters: BTreeSet<Witness>,
+
+    /// The set of public inputs calculated within the circuit.
+    return_values: BTreeSet<Witness>,
+
     opcodes: Vec<AcirOpcode>,
 }
 
@@ -65,18 +70,17 @@ pub fn create_circuit(
 
     let (parameters, return_type) = program.main_function_signature;
 
-    // TODO: remove return value from `param_witnesses` once we track public outputs
-    // see https://github.com/noir-lang/acvm/pull/56
-    let mut param_witnesses = evaluator.param_witnesses;
-    let return_witnesses = param_witnesses.remove(MAIN_RETURN_NAME).unwrap_or_default();
+    let param_witnesses = evaluator.param_witnesses;
 
+    let return_witnesses = evaluator.return_values.iter().copied().collect();
     let abi = Abi { parameters, param_witnesses, return_type, return_witnesses };
 
     let optimized_circuit = acvm::compiler::compile(
         Circuit {
             current_witness_index: witness_index,
             opcodes: evaluator.opcodes,
-            public_inputs: PublicInputs(evaluator.public_inputs),
+            public_parameters: PublicInputs(evaluator.public_parameters),
+            return_values: PublicInputs(evaluator.return_values),
         },
         np_language,
         is_blackbox_supported,
@@ -98,7 +102,7 @@ impl Evaluator {
         // an intermediate variable.
         let is_intermediate_variable = witness_index.as_usize() > self.num_witnesses_abi_len;
 
-        let is_public_input = self.public_inputs.contains(&witness_index);
+        let is_public_input = self.public_parameters.contains(&witness_index);
 
         !is_intermediate_variable && !is_public_input
     }
@@ -206,7 +210,7 @@ impl Evaluator {
         };
 
         if param_visibility == &AbiVisibility::Public {
-            self.public_inputs.extend(witnesses.clone());
+            self.public_parameters.extend(witnesses.clone());
         }
         self.param_witnesses.insert(name.to_owned(), witnesses);
 

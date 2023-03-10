@@ -17,8 +17,7 @@ dependencies = [
 [[package]]
 name = "acir"
 version = "0.6.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "744c21590f6da95914f1d83f247dba49d4f287beb725bfbcbc54eaf823484b1a"
+source = "git+https://github.com/noir-lang/acvm?rev=c8afa864888b2b78af1211ca9e47136ae1b1a5a7#c8afa864888b2b78af1211ca9e47136ae1b1a5a7"
 dependencies = [
  "acir_field 0.6.0",
  "flate2",
@@ -46,8 +45,7 @@ dependencies = [
 [[package]]
 name = "acir_field"
 version = "0.6.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "081a09b71facabddd411bfb8459c0f4d9350c39707680da6c04debb3db9de503"
+source = "git+https://github.com/noir-lang/acvm?rev=c8afa864888b2b78af1211ca9e47136ae1b1a5a7#c8afa864888b2b78af1211ca9e47136ae1b1a5a7"
 dependencies = [
  "ark-bn254 0.4.0",
  "ark-ff 0.4.1",
@@ -79,8 +77,7 @@ dependencies = [
 [[package]]
 name = "acvm"
 version = "0.6.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "73876b7d5d23d0826ea4c9150b4a62af0b20a6937a79472ee0ceda30868aa207"
+source = "git+https://github.com/noir-lang/acvm?rev=c8afa864888b2b78af1211ca9e47136ae1b1a5a7#c8afa864888b2b78af1211ca9e47136ae1b1a5a7"
 dependencies = [
  "acir 0.6.0",
  "acvm_stdlib 0.6.0",
@@ -106,8 +103,7 @@ dependencies = [
 [[package]]
 name = "acvm_stdlib"
 version = "0.6.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b2259c21b06db652e41bddb1deb22da8d303746a0e8bf877983c7d83f71943b8"
+source = "git+https://github.com/noir-lang/acvm?rev=c8afa864888b2b78af1211ca9e47136ae1b1a5a7#c8afa864888b2b78af1211ca9e47136ae1b1a5a7"
 dependencies = [
  "acir 0.6.0",
 ]
@@ -510,7 +506,7 @@ dependencies = [
 [[package]]
 name = "barretenberg_static_lib"
 version = "0.1.0"
-source = "git+https://github.com/noir-lang/aztec_backend?rev=b7f68bddcf05de22f77726c94450791141accc9a#b7f68bddcf05de22f77726c94450791141accc9a"
+source = "git+https://github.com/noir-lang/aztec_backend?rev=cfdaaba65fa1e862385cddbba3cf0689201d9118#cfdaaba65fa1e862385cddbba3cf0689201d9118"
 dependencies = [
  "barretenberg_wrapper",
  "common",
@@ -519,7 +515,7 @@ dependencies = [
 [[package]]
 name = "barretenberg_wasm"
 version = "0.1.0"
-source = "git+https://github.com/noir-lang/aztec_backend?rev=b7f68bddcf05de22f77726c94450791141accc9a#b7f68bddcf05de22f77726c94450791141accc9a"
+source = "git+https://github.com/noir-lang/aztec_backend?rev=cfdaaba65fa1e862385cddbba3cf0689201d9118#cfdaaba65fa1e862385cddbba3cf0689201d9118"
 dependencies = [
  "common",
  "wasmer",
@@ -843,7 +839,7 @@ dependencies = [
 [[package]]
 name = "common"
 version = "0.1.0"
-source = "git+https://github.com/noir-lang/aztec_backend?rev=b7f68bddcf05de22f77726c94450791141accc9a#b7f68bddcf05de22f77726c94450791141accc9a"
+source = "git+https://github.com/noir-lang/aztec_backend?rev=cfdaaba65fa1e862385cddbba3cf0689201d9118#cfdaaba65fa1e862385cddbba3cf0689201d9118"
 dependencies = [
  "acvm 0.6.0",
  "blake2",
